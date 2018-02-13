@@ -1,0 +1,6 @@
+Aufgabe 10 aus den Übungen, allerdings mit MPI statt mit OMP.
+
+Wenn MPI und make installiert sind:
+
+Kompilieren mit "make".
+Ausführen mit "mpirun -np <Anzahl Prozesse> ./10.exe <Anzahl Zeilen/Spalten der Matrix>".
