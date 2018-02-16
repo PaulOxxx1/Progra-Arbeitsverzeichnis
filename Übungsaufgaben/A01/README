@@ -1,0 +1,33 @@
+1. Erste Schritte mit C++
+
+  g++ -E hello.cpp
+
+    Gibt den präprozessierten Quellcode aus, speichert keine Datei, Code wird an Standardausgang gesendet (z.B. Terminal)
+
+  g++ -c hello.cpp
+
+    Kompiliert den Quellcode, aber überspringt das "Linken". Gibt standardmäßig eine Datei mit der Endung .o aus.
+
+  g++ hello.o
+
+    Führt Kompilation vollständig durch, in diesem Fall nur das "Linken", da hello.o bereits eine Objektdatei ist. Das Ergebnis ist die ausführbare Datei a.out, da kein anderer Dateiname angegeben wurde.
+
+  g++ -o hello hello.cpp
+
+    Führt Kompilation vollständig durch, das Ergebnis ist die ausführbare Datei hello, der Name wurde mit dem Zusatz -o angegeben.
+
+  g++ -Wall -Wextra hello.cpp
+
+    Sowohl -Wall als auch -Wextra schalten einige Warnungen an, die der Kompiler ausgeben könnte. In diesem Fall wird trotzdem keine Warnung ausgegeben, da das Programm sehr klein ist und es nichts zu warnen gibt.
+
+  Um aus hello.cpp eine ausführbare Datei zu erhalten, kann ich den Befehl "g++ hello.cpp -o hello.exe" im Verzeichnis der Quellcodedatei ausführen. Um das Programm dann auszuführen, benutze ich den Befehl "./hello.exe" im selben Verzeichnis.
+
+2. Versionskontrolle mit GitLab
+
+3. Ein alternatives Modell
+
+  Um aus Klassik.cpp eine ausführbare Datei zu erhalten, kann ich den Befehl "g++ Klassik.cpp -o klassik.exe" im Verzeichnis der Quellcodedatei ausführen. Um das Programm dann auszuführen, benutze ich den Befehl "./klassik.exe" im selben Verzeichnis.
+
+  x=1.5
+  p=4.24744
+  y=2.43441

@@ -1,0 +1,20 @@
+2. Gaußsches Eliminationsverfahren
+
+  2.3 Vektoren
+
+  Laufzeit 4_2_1.cpp:
+    0,25s user
+    0,01s system
+    0,267 total
+
+  Laufzeit 4_2_2.cpp:
+    0,27s user
+    0,01s system
+    0,285 total
+
+  Laufzeit 4_2_3.cpp:
+    0,59s user
+    0,01s system
+    0,599 total
+
+  -> Verwendung der vector-Klasse erhöht Laufzeit um ~121%

@@ -1,0 +1,17 @@
+1. Markov-Kette
+
+  Kompilieren:
+    im Verzeichnis /paul_orschau/A07 folgenden Befehl eingeben:
+
+      g++ 7.cpp -o 7.exe
+
+    Oder, falls "Make" installiert ist:
+
+      make
+
+  Ausfuehren:
+    im Verzeichnis /paul_orschau/A07 folgenden Befehl eingeben:
+
+      ./7.exe <Anzahl Steps>
+
+    Dabei <Anzahl Steps> jeweils mit der Anzahl der Schritte ersetzen!

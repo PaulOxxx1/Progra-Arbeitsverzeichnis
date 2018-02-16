@@ -1,0 +1,40 @@
+1. Datentypen
+
+  Ausgabe mit Kommentaren:
+
+  11111111 11111111 11111111 11111001 // -7 als int
+  00000000 00000000 00000000 01111111 // 127 als int
+  01111111 11111111 11111111 11111111 // INT_MAX als int
+  10000000 00000000 00000000 00000000 // INT_MAX+1 als int
+  11000000 11100000 00000000 00000000 // -7 als float
+  01000010 11111110 00000000 00000000 // 127 als float
+  01111111 01111111 11111111 11111111 // FLT_MAX als float
+  01111111 01111111 11111111 11111111 // FLT_MAX+1 als float
+  11000000 00011100 00000000 00000000 00000000 00000000 00000000 00000000 // -7 als double
+  01000000 01011111 11000000 00000000 00000000 00000000 00000000 00000000 // 127 als double
+  01111111 11101111 11111111 11111111 11111111 11111111 11111111 11111111 // DBL_MAX als double
+  01111111 11101111 11111111 11111111 11111111 11111111 11111111 11111111 // DBL_MAX+1 als double
+  4 // Größe eines int in Byte
+  4 // Größe eines float in Byte
+  8 // Größe eines double in Byte
+
+2. Überlauf des Wertebereichs
+
+  Ausgabe mit Erläuterung:
+
+  x=236
+  Float:		    y=nan   // "Not a number" - Überlauf des Wertebereichs vom Typ Float
+  Double:		    y=1     // Der Bruch konvergiert gegen 1 bei großen Werten für x, daher ist y=1 (gerundet)
+  Long Double:	y=1     // Der Bruch konvergiert gegen 1 bei großen Werten für x, daher ist y=1 (gerundet)
+  x=237
+  Float:		    y=nan   // "Not a number" - Überlauf des Wertebereichs vom Typ Float
+  Double:		    y=nan   // "Not a number" - Überlauf des Wertebereichs vom Typ Double (erst bei x=237!)
+  Long Double:	y=1     // Der Bruch konvergiert gegen 1 bei großen Werten für x, daher ist y=1 (gerundet)
+  Stellen für Überlauf: // Für den Überlauf ist nur die e Funktion entscheidend, daher errechnet sich die Stelle aus x=ln(MAX)/3
+  Float:		    x=29.5743
+  Double:		    x=236.594  // Hier sieht man, warum sich die Ausgabe beim Typ Double genau zwischen x=236 und x=237 unterscheiden!
+  Long Double:	x=3785.51
+
+3. Zeiger auf Stack und Heap
+
+4. Zeigerketten
