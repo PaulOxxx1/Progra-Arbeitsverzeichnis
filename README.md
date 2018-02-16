@@ -1,3 +1,7 @@
 # Progra-Arbeitsverzeichnis
 
-Eine Sammlung von Dateien, die ich in der Vorlesung mitgetippt habe & ein paar von meinen Lösungen zu Altklausuren.
+Das Verzeichnis enthält
+
+1. Ein paar Dateien, die ich in der Vorlesung mitgetippt hab
+2. Meine Lösungen zu den Übungsaufgaben
+3. Meine Lösungen zu verschiedenen Aufgaben aus den Altklausuren
