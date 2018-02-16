@@ -31,31 +31,36 @@ int measure_roundtrip(const vector<int> & vertices, const vector<pair<pair<int,i
 }
 
 int main(int argc, char const *argv[]) {
-  const int n = 5;
-  vector<int> vertices;
-  vector<pair<pair<int,int>,short> > edges;
-  vector<int>::const_iterator iter, iter2;
+  const int n = 5;  // Anzahl Städte
+  vector<int> vertices; // Vektor aus Städten
+  vector<pair<pair<int,int>,short> > edges; // Vektor aus Verbindungen zwischen Städten (Straßen)
+  vector<int>::const_iterator iter, iter2;  // Iteratoren
   
-  for (int i = 0; i < n; i++) {
+  // Hinzufügen aller Städte
+  for (int i=0;i<n;i++) {
     vertices.push_back(i);
   }
   
-  srand(0);
+  srand(0); // Zufall
+  // Durch alle Städte iterieren und alle untereinander verbinden
   for (iter = vertices.begin(); iter != vertices.end(); iter++) {
-    iter2 = iter;
-    iter2++;
+    iter2 = iter;   // Aktuelle Stadt zwischenspeichern
+    iter2++;    // zur nächsten Stadt springen
+    // alle weiteren Städte durchgehen
     for (; iter2 != vertices.end(); iter2++) {
-      pair<int,int> p = make_pair(*iter, *iter2);
-      short d = floor((double)rand() / RAND_MAX * 1000);
+      pair<int,int> p = make_pair(*iter, *iter2); // Städtepaar erstellen
+      short d = floor((double)rand() / RAND_MAX * 1000);  // zufällige Distanz zwischen Städten würfeln
       
-      pair<pair<int,int>,short> e = make_pair(p,d);
-      edges.push_back(e);
+      pair<pair<int,int>,short> e = make_pair(p,d); // Verbindung aus Städtepaar und Distanz erstellen
+      edges.push_back(e); // Verbindung speichern
       
+      // Ausgabe der neuen Verbindung
       cout << *iter << " / " << *iter2 << " / " << d << endl;
     }
   }
   
-  int shortest_roundtrip = 9999999;
+  
+  int shortest_roundtrip = 9999999; // Variable für kürzesten Weg zwischen allen Städten erstellen
   int roundtrip_length = measure_roundtrip(vertices,edges);
   cout << roundtrip_length << endl;
   
