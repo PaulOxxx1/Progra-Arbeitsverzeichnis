@@ -7,8 +7,7 @@ public:
   A(int i) : i(i) {};
   friend A operator-(const A&);
   friend A operator+(const A&, const A&);
-  friend ostream& operator<<(ostream&, const A&)
-    ;
+  friend ostream& operator<<(ostream&, const A&);
 };
 
 A operator-(const A& x) {
