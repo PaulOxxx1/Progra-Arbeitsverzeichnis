@@ -5,26 +5,26 @@
 using namespace std;
 
 class land_t {
-  bool besucht;
-  unsigned int i;
-  land_t* v;
+  bool besucht; // wurde ich besucht? (wird für "erreichbar" Funktion gebraucht)
+  unsigned int i; // meine ID
+  land_t* v;  // Pointer auf nächstes Land in der Landkarte
   struct nachbar_t {
-    land_t* n;
-    nachbar_t* v;
+    land_t* n;  // Pointer auf das zugehörige Land
+    nachbar_t* v; // Pointer auf den nächsten Nachbar
     nachbar_t(): n(0), v(0) {}
-  } *nachbarn;
+  } *nachbarn;  // eine Liste mit all meinen Nachbarn
 public:
   land_t(int i): i(i), besucht(false), v(0), nachbarn(0) {}
   
   void neuer_nachbar(land_t* nb) {
-    if (nachbarn == 0) {
-      nachbarn = new nachbar_t();
-      nachbarn->n = nb;
-    } else {
-      nachbar_t* p = new nachbar_t();
-      p->n = nb;
-      p->v = nachbarn;
-      nachbarn = p;
+    if (nachbarn == 0) {  // ich habe noch keine Nachbarn!
+      nachbarn = new nachbar_t(); // neuen Nachbar erstellen
+      nachbarn->n = nb; // zugehöriges Land angeben
+    } else { // ich habe bereits Nachbarn!
+      nachbar_t* p = new nachbar_t(); // neuen Nachbar erstellen
+      p->n = nb;  // zugehöriges Land angeben
+      p->v = nachbarn;  // bisherige Nachbarn an neuen Nachbar anhängen
+      nachbarn = p; // neuen Nachbar ist neuer Anfang der Liste
     }
   }
   
@@ -36,23 +36,26 @@ public:
   }
   
   bool erreichbar(land_t* b) {
-    if (b==this and besucht==false) {
-      cout << i << " ";
+    if (b==this and besucht==false) { // ich bin das Ziel, und bin von mir selbst aus erreichbar!
+      cout << i << " "; // Ausgabe meiner ID
       return true;
     } else {
-      if (besucht) {
+      if (besucht) {  // ich wurde schon besucht, also muss ich nicht alles nochmal prüfen
         return false;
-      } else {
-        besucht = true;
+      } else {  // ich werde zum ersten Mal besucht
+        besucht = true; // ich merke mir, dass ich besucht wurde
         bool result = false;
-        nachbar_t* p = nachbarn;
-        while (p) {
+        nachbar_t* p = nachbarn;  // Hilfspointer
+        while (p) { // frage alle meine Nachbarn, ob Ziel erreichbar ist, bis keine mehr da sind
           result = p->n->erreichbar(b);
-          if (result) break;
-          p = p->v;
+          if (result) { // ein Nachbar sagt, das Ziel ist von ihm aus erreichbar!
+            cout << i << " "; // Ausgabe der eigenen ID, denn ich bin Teil der Route zum Ziel!
+            return true;  // meinem Vorgänger sagen, dass Ziel von mir aus erreichbar ist
+          } else { // frage nächsten Nachbar
+            p = p->v;           
+          }
         }
-        cout << i << " ";
-        return result;
+        return false;  // Ziel ist von keinem meiner Nachbarn erreichbar...
       }
     }
   }
@@ -61,32 +64,29 @@ public:
 };
 
 class landkarte_t {
-  land_t* laender;
+  land_t* laender;  // Liste aller Länder
 public:
   land_t* finde_land(int id) {
-    land_t* p = laender;
-    while (p->i!=id and p!=0) {
+    land_t* p = laender;  // Hilfspointer
+    while (p->i!=id and p!=0) { // Suche Land in der ganzen Liste
       p = p->v;
     }
-    assert(p!=0);
     return p;
   }
   
   landkarte_t(ifstream& in) {
-    int n=0; int id=0;
-    in >> n; in >> id; n--;
-    laender = new land_t(id);
+    int n; in >> n; // Anzahl Länder einlesen
     for (int i=0;i<n;i++) {
-      in >> id;
-      land_t* p = new land_t(id);
-      p->v = laender;
-      laender = p;
+      int id; in >> id; // nächste ID einlesen
+      land_t* p = new land_t(id); // neues Land erstellen
+      p->v = laender; // bisherige Länder an neues Land anhängen
+      laender = p; // neues Land ist neuer Anfang der Liste
     }
-    in >> n;
+    in >> n;  // Anzahl Grenzen einlesen
     for (int i=0;i<n;i++) {
-      int a,b;
-      in >> a;
-      in >> b;
+      int a,b; in >> a; in >> b; // Nachbarländer einlesen
+      /* Um Grenze zu erstellen, müssen beide Länder
+      sich gegenseitig in ihre Liste aus Nachbarn eintragen! */
       finde_land(a)->neuer_nachbar(finde_land(b));
       finde_land(b)->neuer_nachbar(finde_land(a));
     }
@@ -95,7 +95,7 @@ public:
   ~landkarte_t() {
     land_t* p = laender;
     while (p) {
-      p = p->v;
+      p = p->v; // Vor der Löschung eines Landes, müssen wir noch zum nächsten Land!
       delete laender;
       laender = p;
     }
@@ -104,18 +104,24 @@ public:
   bool erreichbar(land_t* a, land_t* b) {
     cout << "Erreichbar " << a->i;
     cout << "->" << b->i << "? ";
+    /* Hier passiert die komplette Suche, indem alle Länder
+    sich untereinander fragen, ob das Ziel von den jeweils anderen erreichbar ist */
     bool e = a->erreichbar(b);
+    // Je nach Ergebnis ändert sich die Ausgabe
     if (e) {
       cout << "JA" << endl;
     } else {
       cout << "NEIN" << endl;
     }
+    /* Nachdem die Suche abgeschlossen ist, müssen alle
+    Länder wieder vergessen, dass sie besucht worden sind,
+    damit die nächste Suche funktionieren kann */
     land_t* p = laender;
     while (p) {
       p->besucht = false;
       p = p->v;
     }
-    return e;
+    return e; // Gebe Ergebnis zurück (optional, Funktion hätte für die Aufgabe auch "void" sein können!)
   }
   
   void ausgabe() {
