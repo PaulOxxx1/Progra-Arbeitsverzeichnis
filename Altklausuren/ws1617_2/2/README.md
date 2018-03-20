@@ -4,6 +4,8 @@ Das Verzeichnis enthält:
 **main.cpp**
 - Gemeinsame Lösung als Vorbereitung auf die zweite Klausur:
 **main2.cpp**
+- Beste Lösung (Kombination aus den anderen beiden + Kommentare):
+**main3.cpp**
 - Beispiele für Eingabe und Ausgabedateien:
 **in.txt** & **out.txt**
 
