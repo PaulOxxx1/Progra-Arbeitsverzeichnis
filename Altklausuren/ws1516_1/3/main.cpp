@@ -6,36 +6,32 @@
 using namespace std;
 
 
-class list_element{
-  int v;
-  list_element *p, *n;
+class list_element {
+  int v;  // Zahl
+  list_element *p, *n;  // Vorgänger/Nachfolger
 
 public:
   // Konstruktor
   list_element(int v) : v(v), p(0), n(0) {}
-  // Zugriffsroutinen
+  // Zugriffsroutinen (Lesen & Schreiben)
   list_element*& p_access() { return p; }
   list_element*& n_access() { return n; }
   // Ausgabe vorwärts (rekursiv)
-  void print_forwards(){
-    cout << v << " ";
-    if (n) {
-      n->print_forwards();
-    }
+  void print_forwards() {
+    cout << v << " "; // gib mich selbst aus
+    if (n) n->print_forwards(); // sage meinem Nachfolger, er soll sich ausgeben, falls es einen gibt
   }
   // Ausgabe rückwärts (rekursiv)
-  void print_backwards(){
-    cout << v << " ";
-    if (p) {
-      p->print_backwards();
-    }
+  void print_backwards() {
+    cout << v << " "; // gib mich selbst aus
+    if (p) p->print_backwards(); // sage meinem Vorgänger, er soll sich ausgeben, falls es einen gibt
   }
 };
 
 
 class history{
-  unsigned int s, max_s;
-  list_element *f, *l;
+  unsigned int s, max_s;  // aktuelle und maximale Länge
+  list_element *f, *l;  // erstes und letztes Element
 
 public:
   // Konstruktor
@@ -50,19 +46,19 @@ public:
       delete f;
     }
   }
-  // Listenelement
+  // Element hinzufügen
   void add_list_element(list_element *e) {
-    if (max_s) {
-      if (s) {
+    if (max_s) {  // nur hinzufügen, falls Liste überhaupt Elemente haben darf
+      if (s) {  // es gibt schon Elemente, also hänge e hinten dran
         l->n_access() = e;
         e->p_access() = l;
         l = e;
-      } else {
+      } else {  // es gibt noch keine Elemente, e ist das erste und letzte Element
         f = e;
         l = e;
       }
-      s++;
-      if (s>max_s){
+      s++;  // Counter erhöhen
+      if (s>max_s){ // Liste ist zu lang, also schneide erstes Element ab 
         f = f->n_access();
         delete f->p_access();
         f->p_access() = 0;
@@ -72,14 +68,14 @@ public:
   }
   // Ausgabe vorwärts (rekursiv)
   void print_forwards() {
-    if (s) {
+    if (s) {  // gebe nur Listen aus, die nicht leer sind
       f->print_forwards();
       cout << endl;
     }
   }
   // Ausgabe rückwärts (rekursiv)
   void print_backwards() {
-    if (s) {
+    if (s) {  // gebe nur Listen aus, die nicht leer sind
       l->print_backwards();
       cout << endl;
     }
