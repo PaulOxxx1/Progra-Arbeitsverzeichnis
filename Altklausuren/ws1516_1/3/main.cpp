@@ -51,21 +51,23 @@ public:
     }
   }
   // Listenelement
-  void add_list_element(list_element *e){
-    if (s) {
-      l->n_access() = e;
-      e->p_access() = l;
-      l = e;
-    } else {
-      f = e;
-      l = e;
-    }
-    s++;
-    if (s>max_s){
-      f = f->n_access();
-      delete f->p_access();
-      f->p_access() = 0;
-      s--;
+  void add_list_element(list_element *e) {
+    if (max_s) {
+      if (s) {
+        l->n_access() = e;
+        e->p_access() = l;
+        l = e;
+      } else {
+        f = e;
+        l = e;
+      }
+      s++;
+      if (s>max_s){
+        f = f->n_access();
+        delete f->p_access();
+        f->p_access() = 0;
+        s--;
+      }
     }
   }
   // Ausgabe vorwärts (rekursiv)
