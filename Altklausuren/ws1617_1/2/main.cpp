@@ -74,7 +74,7 @@ public:
     return p;
   }
   
-  landkarte_t(ifstream& in) {
+  landkarte_t(ifstream& in) : laender(0) {
     int n; in >> n; // Anzahl Länder einlesen
     for (int i=0;i<n;i++) {
       int id; in >> id; // nächste ID einlesen
