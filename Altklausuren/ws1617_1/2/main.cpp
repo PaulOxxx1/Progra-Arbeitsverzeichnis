@@ -85,6 +85,9 @@ public:
     in >> n;  // Anzahl Grenzen einlesen
     for (int i=0;i<n;i++) {
       int a,b; in >> a; in >> b; // Nachbarländer einlesen
+      assert(a!=b);
+      assert(finde_land(a));
+      assert(finde_land(b));
       /* Um Grenze zu erstellen, müssen beide Länder
       sich gegenseitig in ihre Liste aus Nachbarn eintragen! */
       finde_land(a)->neuer_nachbar(finde_land(b));
@@ -102,6 +105,7 @@ public:
   }
   
   bool erreichbar(land_t* a, land_t* b) {
+    assert(a); assert(b);
     cout << "Erreichbar " << a->i;
     cout << "->" << b->i << "? ";
     /* Hier passiert die komplette Suche, indem alle Länder
