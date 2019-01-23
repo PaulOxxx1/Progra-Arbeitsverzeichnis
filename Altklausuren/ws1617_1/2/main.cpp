@@ -17,15 +17,10 @@ public:
   land_t(int i): i(i), besucht(false), v(0), nachbarn(0) {}
   
   void neuer_nachbar(land_t* nb) {
-    if (nachbarn == 0) {  // ich habe noch keine Nachbarn!
-      nachbarn = new nachbar_t(); // neuen Nachbar erstellen
-      nachbarn->n = nb; // zugehöriges Land angeben
-    } else { // ich habe bereits Nachbarn!
-      nachbar_t* p = new nachbar_t(); // neuen Nachbar erstellen
-      p->n = nb;  // zugehöriges Land angeben
-      p->v = nachbarn;  // bisherige Nachbarn an neuen Nachbar anhängen
-      nachbarn = p; // neuen Nachbar ist neuer Anfang der Liste
-    }
+    nachbar_t* p = new nachbar_t(); // neuen Nachbar erstellen
+    p->n = nb;  // zugehöriges Land angeben
+    p->v = nachbarn;  // bisherige Nachbarn an neuen Nachbar anhängen
+    nachbarn = p; // neuen Nachbar ist neuer Anfang der Liste
   }
   
   void ausgabe() {
@@ -68,10 +63,11 @@ class landkarte_t {
 public:
   land_t* finde_land(int id) {
     land_t* p = laender;  // Hilfspointer
-    while (p->i!=id and p!=0) { // Suche Land in der ganzen Liste
+    while (p!=0) { // Suche Land in der ganzen Liste
+      if (p->i == id) return p; // Das Land wurde gefunden!
       p = p->v;
     }
-    return p;
+    return 0;
   }
   
   landkarte_t(ifstream& in) : laender(0) {
@@ -84,14 +80,16 @@ public:
     }
     in >> n;  // Anzahl Grenzen einlesen
     for (int i=0;i<n;i++) {
-      int a,b; in >> a; in >> b; // Nachbarländer einlesen
-      assert(a!=b);
-      assert(finde_land(a));
-      assert(finde_land(b));
+      int a,b; in >> a; in >> b; // IDs von Nachbarländer einlesen
+      land_t* land1 = finde_land(a);  // Länder im Speicher finden
+      land_t* land2 = finde_land(b);
+      assert(land1!=land2); // Keine Grenze zwischen dem Land mit sich selbst erlauben
+      assert(land1);  // Beide Länder müssen vorhanden sein
+      assert(land2);
       /* Um Grenze zu erstellen, müssen beide Länder
       sich gegenseitig in ihre Liste aus Nachbarn eintragen! */
-      finde_land(a)->neuer_nachbar(finde_land(b));
-      finde_land(b)->neuer_nachbar(finde_land(a));
+      land1->neuer_nachbar(land2);
+      land2->neuer_nachbar(land1);
     }
   }
   
