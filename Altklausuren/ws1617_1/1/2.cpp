@@ -12,8 +12,7 @@ int f(int a, int& b, int c) {
 
 int main(int c, char* v[]) {
   int a=c;
-  cout << a*f(1,a,atoi(v[1])) << endl;
-  // cout << f(1,a,atoi(v[1])) << endl;
-  // cout << a << endl;
+  cout << a*f(1,a,atoi(v[1])) << endl;      // so steht die Zeile in der Aufgabenstellung...
+  // cout << f(1,a,atoi(v[1]))*a << endl    // ...vermutlich sollte es aber eigentlich so da stehen!
   return 0;
 }
